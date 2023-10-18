@@ -6,7 +6,154 @@
         xmlns:local="clr-namespace:Wpf_Pendu_Quentin_Vernaison"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="ColorRed" Color="Red" />
+        <SolidColorBrush x:Key="ColorGreen" Color="Green" />
+        <Style x:Key="Title" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="60"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="Nom" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="#E1BBC9"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+
+        </Style>
+
+
+        <Style x:Key="MyStyle" TargetType="{x:Type Control}">
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Background" Value="#E1BBC9"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="FontSize" Value="23"/>
+            <Setter Property="Foreground" Value="#E6E8E6"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+
+    </Window.Resources>
+    <!--************************** Bloc Total **************************-->
+    <Grid Background="#F6E8EA">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--************************** Bloc du Haut (Titre + Paramètre) **************************-->
+        <Grid Grid.Row="0" Name="gridTitle" Background="#E1BBC9">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--************************** Bloc du Haut (Titre) **************************-->
+            <Grid Grid.Column="0" Grid.Row="0">
+                <TextBox Name="Title" Text="HANGMAN" Style="{StaticResource Title}" Background="#E1BBC9" IsReadOnly="True" />
+
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.Row="0">
+
+                <Button Content="Restart" x:Name="BTN_Restart" Style="{StaticResource MyStyle}" Margin="15"  Background="#E1BBC9" Click="BTN_Restart_Click" />
+                
+            </Grid>
+        </Grid>
+
+
+        <!--************************** Bloc du Milieu **************************-->
+        <Grid Grid.Row="1" Name="gridcentral" Background="#E1BBC9">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--************************** Bloc du Pendu **************************-->
+            <Grid Grid.Column="0" Grid.Row="1" Background="#E1BBC9">
+
+
+            </Grid>
+
+
+            <!--************************** Bloc du Milieu (Clavier + Texte) **************************-->
+            <Grid Grid.Column="1" Name="gridmilieu" Background="#E1BBC9">
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="1.5*"/>
+
+                </Grid.RowDefinitions>
+
+                <Grid  Grid.Row="1" Margin="4">
+                    <TextBox Name="TB_Mot" Text="" Style="{StaticResource Nom }" IsReadOnly="True"/>
+                </Grid>
+
+                <Grid  Grid.Row="0" Margin="4">
+                    <TextBox Name="Intitule" Text="Trouver le Mot" Style="{StaticResource Nom }" IsReadOnly="True" />
+                </Grid>
+
+
+                <Grid  Grid.Row="2" Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Row="0" Grid.Column="0" Name="BTN_A" Content="A" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="0" Grid.Column="1" Name="BTN_B" Content="B" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="0" Grid.Column="2" Name="BTN_C" Content="C" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="0" Grid.Column="3" Name="BTN_D" Content="D" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="0" Grid.Column="4" Name="BTN_E" Content="E" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="0" Grid.Column="5" Name="BTN_F" Content="F" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="1" Grid.Column="0" Name="BTN_G" Content="G" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="1" Grid.Column="1" Name="BTN_H" Content="H" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="1" Grid.Column="2" Name="BTN_I" Content="I" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="1" Grid.Column="3" Name="BTN_J" Content="J" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="1" Grid.Column="4" Name="BTN_K" Content="K" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="1" Grid.Column="5" Name="BTN_L" Content="L" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="0" Name="BTN_M" Content="M" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="1" Name="BTN_N" Content="N" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="2" Name="BTN_O" Content="O" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="3" Name="BTN_P" Content="P" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="4" Name="BTN_Q" Content="Q" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="5" Name="BTN_R" Content="R" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="3" Grid.Column="0" Name="BTN_S" Content="S" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="3" Grid.Column="1" Name="BTN_T" Content="T" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="3" Grid.Column="2" Name="BTN_U" Content="U" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="3" Grid.Column="3" Name="BTN_V" Content="V" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="3" Grid.Column="4" Name="BTN_W" Content="W" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="3" Grid.Column="5" Name="BTN_X" Content="X" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="4" Grid.Column="2" Name="BTN_Y" Content="Y" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                    <Button Grid.Row="4" Grid.Column="3" Name="BTN_Z" Content="Z" Click="BTN_Click" Style="{StaticResource MyStyle}"/>
+                </Grid>
+            </Grid>
+
+
+        </Grid>
+
+
     </Grid>
+    
+        
+    
 </Window>
