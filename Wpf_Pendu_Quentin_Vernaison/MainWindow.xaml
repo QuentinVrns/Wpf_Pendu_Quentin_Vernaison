@@ -8,36 +8,89 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Window.Resources>
-        <SolidColorBrush x:Key="ColorRed" Color="Red" />
-        <SolidColorBrush x:Key="ColorGreen" Color="Green" />
-        <Style x:Key="Title" TargetType="{x:Type TextBox}">
+        
+        <!--  Fais moi un style pour les boutons parametre et aide qui doit etre plutot réaliste  -->
+        <Style x:Key="Aide" TargetType="{x:Type Button}">
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontSize" Value="60"/>
-            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#E1BBC9"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Template">               
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Background="#E1BBC9">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
+
+
+        <Style x:Key="Title" TargetType="{x:Type TextBox}">
+            <!-- Prend en exemple le style des boutons et fais moi le meme pour la textbox-->
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="#E1BBC9"/>
+            <Setter Property="FontSize" Value="50"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+            
+
+
+
+
+
+
 
         <Style x:Key="Nom" TargetType="{x:Type TextBox}">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Background" Value="#E1BBC9"/>
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="TextAlignment" Value="Center"/>
-
+            <Setter Property="IsReadOnly" Value="True"/>
+            
         </Style>
+        
 
-
-        <Style x:Key="MyStyle" TargetType="{x:Type Control}">
-            <Setter Property="Margin" Value="1"/>
+        <!-- Le style pour les labels qui reprend le style des boutons-->
+        <Style x:Key="Vie" TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="5"/>
             <Setter Property="Background" Value="#E1BBC9"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="23"/>
-            <Setter Property="Foreground" Value="#E6E8E6"/>
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Style.Resources>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Background="#E1BBC9">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
+
+
+
+        <Style x:Key="MyStyle" TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Background" Value="#E1BBC9"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Background="#E1BBC9">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
 
     </Window.Resources>
     <!--************************** Bloc Total **************************-->
@@ -57,13 +110,13 @@
 
             <!--************************** Bloc du Haut (Titre) **************************-->
             <Grid Grid.Column="0" Grid.Row="0">
-                <TextBox Name="Title" Text="HANGMAN" Style="{StaticResource Title}" Background="#E1BBC9" IsReadOnly="True" />
+                <TextBox Name="Title" Text="HANGMAN" Style="{StaticResource Title}" IsReadOnly="True" />
 
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="0">
 
-                <Button Content="Restart" x:Name="BTN_Restart" Style="{StaticResource MyStyle}" Margin="15"  Background="#E1BBC9" Click="BTN_Restart_Click" />
+                <Button Content="Restart" x:Name="BTN_Restart" Style="{StaticResource Aide}" Margin="15"  Background="#E1BBC9" Click="BTN_Restart_Click" />
                 
             </Grid>
         </Grid>
@@ -76,12 +129,33 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
+            
+                
+            
+            <!--************************** Bloc du bouton Paramètre et du bouton permettant de donner une lettre du mot en enlevant 2 vie et une label avec le nombres de vie **************************-->
+            <Grid Grid.Column="2" Grid.Row="0" Background="#E1BBC9">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="1" Content="Setting" x:Name="BTN_Parametre" Style="{StaticResource Aide}" Margin="15"  Background="#E1BBC9" Click="BTN_Parametre_Click" />
+                <Button Grid.Row="2" Content="Aide" x:Name="BTN_Aide" Style="{StaticResource Aide}" Margin="15"  Background="#E1BBC9" Click="BTN_Aide_Click" />
+                <Label Name="LBL_Vie" Content="Vie : 7" Style="{StaticResource Vie}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
 
-            <!--************************** Bloc du Pendu **************************-->
-            <Grid Grid.Column="0" Grid.Row="1" Background="#E1BBC9">
-
+            <!--************************** Bloc du Pendu ou l'image du pendu est afficher et un timer au dessus **************************-->
+            <Grid Grid.Column="0" Grid.Row="0" Background="#E1BBC9">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="2.5*"/>
+                </Grid.RowDefinitions>
+                <Label Name="LBL_Timer" Content="" Style="{StaticResource Vie}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Image Grid.Row="1" Name="PenduImages" Source="Image/0.png" Stretch="Fill" />
 
             </Grid>
+            
+            
 
 
             <!--************************** Bloc du Milieu (Clavier + Texte) **************************-->
@@ -103,7 +177,7 @@
                 </Grid>
 
 
-                <Grid  Grid.Row="2" Margin="20">
+                <Grid  x:Name="Grille" Grid.Row="2" Margin="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
