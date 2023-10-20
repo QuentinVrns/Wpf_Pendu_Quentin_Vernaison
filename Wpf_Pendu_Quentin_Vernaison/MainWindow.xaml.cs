@@ -21,8 +21,8 @@ namespace Wpf_Pendu_Quentin_Vernaison
         private string motAffiche;
         private int erreurs = 0;
         private int maxErreurs = 7;
-
-        
+        private bool Premiergame = true;
+        DispatcherTimer timer;
 
         
         
@@ -33,7 +33,6 @@ namespace Wpf_Pendu_Quentin_Vernaison
             InitializeComponent();
             StartNewGame();
             Label LBL_Vie = new Label();          
-
 
         }
 
@@ -50,12 +49,18 @@ namespace Wpf_Pendu_Quentin_Vernaison
         private void BTN_Click(object sender, RoutedEventArgs e) // Un bouton qui permet de choisir une lettre et qui vérifie si elle est dans le mot 
         {                                                        // mystère et qui l'a met en rouge si elle n'est pas dans le mot et en vert si elle est dans le mot
 
-
             Button bouton = (Button)sender;
             char lettre = Convert.ToChar(bouton.Content);
 
+            if (Premiergame)
+            {
+                StartTimer();
+                Premiergame = false;
+            }
+
 
             bouton.IsEnabled = false;
+            
 
 
             for (int i = 0; i < motMystere.Length; i++) //affiche la lettre dans le mot mystère si elle est dans le mot mystère et si elle n'est pas dans le mot mystère elle affiche un ?
@@ -95,16 +100,16 @@ namespace Wpf_Pendu_Quentin_Vernaison
                 Window4 Window4 = new Window4();
                 Window4.ShowDialog();
             }
-            {
+            // Si le timer est à 0 ouvre une popup avec un message de défaite
 
-
-            }
+         
         }
         // Une fonction pour restart avec le BTN_Restart_Click une partie  et qui réactive les boutons et reset l'image 
 
         private void BTN_Restart_Click(object sender, RoutedEventArgs e)
         {
             PenduImages.Source = new BitmapImage(new Uri("Image/0.png", UriKind.Relative));
+            StopTimer();
             StartNewGame();
             LBL_Vie.Content = "Vie: " + (maxErreurs - erreurs);
             foreach (var bouton in Grille.Children.OfType<Button>()) // Réactive les boutons et remet la couleur des boutons avec la couleur initial
@@ -113,7 +118,7 @@ namespace Wpf_Pendu_Quentin_Vernaison
                 bouton.Foreground = Brushes.Black;
 
             }
-
+            Premiergame = true;
 
         }
 
@@ -145,21 +150,48 @@ namespace Wpf_Pendu_Quentin_Vernaison
                     bouton.Foreground = Brushes.Green;
                     bouton.IsEnabled = false;
                 }
-            }
-            
-            
-            
+            }            
+                               
+              
+        }
 
-            
-            
+        // code moi un timer qui met a jour la progress bar jusqu'au maximum
+        // quand la progress bar est au maximum, tu perds la partie et la progress bar est remise à 0
+        private void StartTimer()
+        {
+            Bar.Value = 0;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
 
-
-            
-            
+        // code moi une function qui stop le timer
+        private void StopTimer()
+        {
+            Bar.Value = 0;
+            timer.Stop();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Bar.Value += 1;
+            if (Bar.Value == Bar.Maximum)
+            {
                 
+                
+                Window4 Window4 = new Window4();
+                Window4.ShowDialog();
 
 
-        }        
+                
+                Premiergame = true;
+                StopTimer();
+            }
+        }
+
+
+        
+
 
     }
 }

@@ -150,8 +150,9 @@
                     <RowDefinition Height="0.5*"/>
                     <RowDefinition Height="2.5*"/>
                 </Grid.RowDefinitions>
-                <Label Name="LBL_Timer" Content="" Style="{StaticResource Vie}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <Image Grid.Row="1" Name="PenduImages" Source="Image/0.png" Stretch="Fill" />
+                <Image Grid.Row="1" x:Name="PenduImages" Source="Image/0.png" Stretch="Fill" />
+
+                <ProgressBar x:Name="Bar" Background="#E1BBC9" Foreground="Red" Margin="10" BorderBrush="Black" BorderThickness="3" Maximum="90" />
 
             </Grid>
             

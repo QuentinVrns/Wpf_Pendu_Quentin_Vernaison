@@ -145,8 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\0.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Image\1.png" />
     <Resource Include="Image\2.png" />
     <Resource Include="Image\3.png" />
