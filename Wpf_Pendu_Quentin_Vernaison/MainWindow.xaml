@@ -35,6 +35,8 @@
             <Setter Property="FontSize" Value="50"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
         </Style>
             
 
@@ -50,6 +52,9 @@
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            
             
         </Style>
         
@@ -136,12 +141,14 @@
             <Grid Grid.Column="2" Grid.Row="0" Background="#E1BBC9">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="0.5*"/>
-                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Row="1" Content="Setting" x:Name="BTN_Parametre" Style="{StaticResource Aide}" Margin="15"  Background="#E1BBC9" Click="BTN_Parametre_Click" />
+                <Button Grid.Row="1" Content="Rules" x:Name="BTN_Parametre" Style="{StaticResource Aide}" Margin="15"  Background="#E1BBC9" Click="BTN_Parametre_Click" />
                 <Button Grid.Row="2" Content="Aide" x:Name="BTN_Aide" Style="{StaticResource Aide}" Margin="15"  Background="#E1BBC9" Click="BTN_Aide_Click" />
                 <Label Name="LBL_Vie" Content="Vie : 7" Style="{StaticResource Vie}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Button Grid.Row="3" x:Name="Btn_Music" Style="{StaticResource Aide}" Content="Music" Margin="15"  Background="#E1BBC9" Click="Btn_Music_Click" />
             </Grid>
 
             <!--************************** Bloc du Pendu ou l'image du pendu est afficher et un timer au dessus **************************-->
@@ -174,7 +181,7 @@
                 </Grid>
 
                 <Grid  Grid.Row="0" Margin="4">
-                    <TextBox Name="Intitule" Text="Trouver le Mot" Style="{StaticResource Nom }" IsReadOnly="True" />
+                    <TextBox Name="Intitule" Text="Trouver le Mot" Style="{StaticResource Nom }" TextAlignment="Center"  IsReadOnly="True" />
                 </Grid>
 
 

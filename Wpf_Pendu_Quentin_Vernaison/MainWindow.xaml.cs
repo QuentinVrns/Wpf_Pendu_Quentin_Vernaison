@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-
+using Wpf_Pendu_Quentin_Vernaison.Classes;
 
 namespace Wpf_Pendu_Quentin_Vernaison
 {
@@ -16,34 +16,52 @@ namespace Wpf_Pendu_Quentin_Vernaison
 
     public partial class MainWindow : Window
     {
-        private string[] mots = { "INFORMATIQUE", "PROGRAMMATION", "MAISON", "AMBULANCE", "VOITURE", "AVION", "PARIS", "ANNECY", "VOYAGE", "VACANCE" , "ETUDIANT", "ECOLE", "NOURRITURE" };
-        private string motMystere;
-        private string motAffiche;
-        private int erreurs = 0;
-        private int maxErreurs = 7;
-        private bool Premiergame = true;
-        DispatcherTimer timer;
+        public string[] mots = {};
+        public string motMystere;
+        public string motAffiche;
+        public int erreurs = 0;
+        public int maxErreurs = 7;
+        public bool Premiergame = true;
+        public MediaPlayer _mediaPlayer = new MediaPlayer();
 
-        
-        
+        public string chemin = @"Ressource/Mots.txt";
+        public string path = @"Musique/Music1.mp3";
+        private PenduClass _penduClass;
        
 
         public MainWindow() // Initialise la fenêtre et lance la fonction StartNewGame
         {
-            InitializeComponent();
-            StartNewGame();
-            Label LBL_Vie = new Label();          
-
+            InitializeComponent();           
+            LireFicher();
+            _penduClass = new PenduClass(this);
+            _penduClass.StartNewGame();
+            Label LBL_Vie = new Label();
+            
         }
 
-        private void StartNewGame()   // Une fonction qui permet de commencer une nouvelle partie et qui choisi un mot aléatoire dans le tableau de mots et qui affiche le mot mystère en ?
+        private void LireFicher()
         {
-            Random random = new Random();
-            motMystere = mots[random.Next(mots.Length)];
-            motAffiche = new string('?', motMystere.Length);
-            TB_Mot.Text = motAffiche;
-            erreurs = 0;
+            mots = File.ReadAllLines(chemin);
+        }
 
+
+        private void RemplacerLettre(char lettre)
+        {
+            for (int i = 0; i < motMystere.Length; i++) //affiche la lettre dans le mot mystère si elle est dans le mot mystère et si elle n'est pas dans le mot mystère elle affiche un ?
+            {
+                if (motMystere[i] == lettre)
+                {
+                    motAffiche = motAffiche.Remove(i, 1).Insert(i, lettre.ToString());
+                    TB_Mot.Text = motAffiche;
+                }
+            }
+        }
+
+        public void ChangementImage()
+        {
+            // Affiche l'image qui correspond au nombre d'erreurs
+            PenduImages.Source = new BitmapImage(new Uri("Image/" + erreurs + ".png", UriKind.Relative));
+            LBL_Vie.Content = "Vie: " + (maxErreurs - erreurs);
         }
 
         private void BTN_Click(object sender, RoutedEventArgs e) // Un bouton qui permet de choisir une lettre et qui vérifie si elle est dans le mot 
@@ -54,37 +72,23 @@ namespace Wpf_Pendu_Quentin_Vernaison
 
             if (Premiergame)
             {
-                StartTimer();
+                _penduClass.StartTimer();
                 Premiergame = false;
             }
 
 
             bouton.IsEnabled = false;
             
-
-
-            for (int i = 0; i < motMystere.Length; i++) //affiche la lettre dans le mot mystère si elle est dans le mot mystère et si elle n'est pas dans le mot mystère elle affiche un ?
-            {
-                if (motMystere[i] == lettre)
-                {
-                    motAffiche = motAffiche.Remove(i, 1).Insert(i, lettre.ToString());
-                    TB_Mot.Text = motAffiche;
-                }
-            }
             if (motMystere.Contains(lettre)) // Si la lettre est dans le mot mystère elle est affichée dans le mot à trouver et si elle n'est pas dans le mot mystère elle est affichée en rouge
             {
                 bouton.Foreground = Brushes.Green;
+                RemplacerLettre(lettre);
             }
             else if (!motMystere.Contains(lettre))
             {
                 bouton.Foreground = Brushes.Red;
-
-
                 erreurs++;
-                // Affiche l'image qui correspond au nombre d'erreurs
-                PenduImages.Source = new BitmapImage(new Uri("Image/" + erreurs + ".png", UriKind.Relative));
-                LBL_Vie.Content = "Vie: " + (maxErreurs - erreurs);
-
+                ChangementImage();
             }
 
             if (motAffiche == motMystere) // Si le mot mystère est trouvé ouvre une popup avec un message de victoire
@@ -94,105 +98,53 @@ namespace Wpf_Pendu_Quentin_Vernaison
 
             }
 
-
-            if (erreurs == maxErreurs) // Si le mot est trouvé ouvre une popup avec un message de défaite
+            if (erreurs == maxErreurs) // Si le mot n'est pas trouvé ouvre une popup avec un message de défaite et remet a 0 le timer
             {
+                _penduClass.BloquerBouton();
+                _penduClass.StopTimer();
                 Window4 Window4 = new Window4();
                 Window4.ShowDialog();
+                Premiergame = true;
+                
             }
-            // Si le timer est à 0 ouvre une popup avec un message de défaite
 
-         
+              
+            
+
+
         }
         // Une fonction pour restart avec le BTN_Restart_Click une partie  et qui réactive les boutons et reset l'image 
 
         private void BTN_Restart_Click(object sender, RoutedEventArgs e)
         {
-            PenduImages.Source = new BitmapImage(new Uri("Image/0.png", UriKind.Relative));
-            StopTimer();
-            StartNewGame();
-            LBL_Vie.Content = "Vie: " + (maxErreurs - erreurs);
-            foreach (var bouton in Grille.Children.OfType<Button>()) // Réactive les boutons et remet la couleur des boutons avec la couleur initial
+            _penduClass.Restart();
+
+        }
+
+        private void BTN_Parametre_Click(object sender, RoutedEventArgs e) // Ouvre une popup avec les paramètres qui est sur window1.xaml , il s'ouvre qu'une seule fois a la fois 
+        { // Il ne faut pas que la fenetre puisse s'ouvrir plusieurs fois en même temps
+            
             {
-                bouton.IsEnabled = true;
-                bouton.Foreground = Brushes.Black;
-
+                Window1 Window1 = new Window1();
+                Window1.ShowDialog();
             }
-            Premiergame = true;
+
+            
 
         }
-
-        private void BTN_Parametre_Click(object sender, RoutedEventArgs e) // Ouvre une popup avec les paramètres qui est sur window1.xaml
-        {
-            Window1 Window1 = new Window1();
-            Window1.ShowDialog();
-        }
-
-
-
 
         private void BTN_Aide_Click(object sender, RoutedEventArgs e)  // Permet d'avoir une lettre d'afficher dans le mot qui correspond a une lettre du mot mystère et fais perdre 2 vie 
         {
-            Random random = new Random();
-            int index = random.Next(motMystere.Length);
-            char lettre = motMystere[index];
-            motAffiche = motAffiche.Remove(index, 1).Insert(index, lettre.ToString());
-            TB_Mot.Text = motAffiche;
-            erreurs = erreurs + 2;
-            PenduImages.Source = new BitmapImage(new Uri("Image/" + erreurs + ".png", UriKind.Relative));
-            BTN_Aide.IsEnabled = false;
-            LBL_Vie.Content = "Vie: " + (maxErreurs - erreurs);
-            // Met la lettre utiliser en vert
-            foreach (var bouton in Grille.Children.OfType<Button>())
-            {
-                if (bouton.Content.ToString() == lettre.ToString())
-                {
-                    bouton.Foreground = Brushes.Green;
-                    bouton.IsEnabled = false;
-                }
-            }            
-                               
-              
+            _penduClass.Aide();
+
+
         }
 
-        // code moi un timer qui met a jour la progress bar jusqu'au maximum
-        // quand la progress bar est au maximum, tu perds la partie et la progress bar est remise à 0
-        private void StartTimer()
+        private void Btn_Music_Click(object sender, RoutedEventArgs e) // Fonction qui permet de faire MusicOn/Off
         {
-            Bar.Value = 0;
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            _penduClass.PlayMusic();
+            
         }
-
-        // code moi une function qui stop le timer
-        private void StopTimer()
-        {
-            Bar.Value = 0;
-            timer.Stop();
-        }
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            Bar.Value += 1;
-            if (Bar.Value == Bar.Maximum)
-            {
-                
-                
-                Window4 Window4 = new Window4();
-                Window4.ShowDialog();
-
-
-                
-                Premiergame = true;
-                StopTimer();
-            }
-        }
-
-
-        
-
-
     }
 }
 
