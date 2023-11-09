@@ -23,5 +23,18 @@ namespace Wpf_Pendu_Quentin_Vernaison
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)  // Bouton qui permet de retourner au menu principal et empecher de pouvoir clicker sur la croix pour fermer la fenêtre
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Close();
+            
+        }
+
+        private void Grid_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+
+        }
     }
 }

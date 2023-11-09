@@ -23,5 +23,22 @@ namespace Wpf_Pendu_Quentin_Vernaison
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e) //fonction qui permet de retourner au menu principal
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Close();
+        }
+        
+        
+
+        
+            
+
+            
+
+
+        
     }
 }

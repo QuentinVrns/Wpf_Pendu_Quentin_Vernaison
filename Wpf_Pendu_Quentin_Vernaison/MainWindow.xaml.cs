@@ -22,10 +22,10 @@ namespace Wpf_Pendu_Quentin_Vernaison
         public int erreurs = 0;
         public int maxErreurs = 7;
         public bool Premiergame = true;
-        public MediaPlayer _mediaPlayer = new MediaPlayer();
+        
 
         public string chemin = @"Ressource/Mots.txt";
-        public string path = @"Musique/Music1.mp3";
+        
         private PenduClass _penduClass;
        
 
@@ -93,17 +93,21 @@ namespace Wpf_Pendu_Quentin_Vernaison
 
             if (motAffiche == motMystere) // Si le mot mystère est trouvé ouvre une popup avec un message de victoire
             {
+                _penduClass.BloquerBouton();
+                _penduClass.StopTimer();
                 Window3 Window3 = new Window3();
                 Window3.ShowDialog();
+                this.Close();
 
             }
 
             if (erreurs == maxErreurs) // Si le mot n'est pas trouvé ouvre une popup avec un message de défaite et remet a 0 le timer
             {
                 _penduClass.BloquerBouton();
-                _penduClass.StopTimer();
+                _penduClass.StopTimer();               
                 Window4 Window4 = new Window4();
                 Window4.ShowDialog();
+                this.Close();
                 Premiergame = true;
                 
             }
@@ -122,7 +126,7 @@ namespace Wpf_Pendu_Quentin_Vernaison
         }
 
         private void BTN_Parametre_Click(object sender, RoutedEventArgs e) // Ouvre une popup avec les paramètres qui est sur window1.xaml , il s'ouvre qu'une seule fois a la fois 
-        { // Il ne faut pas que la fenetre puisse s'ouvrir plusieurs fois en même temps
+        { 
             
             {
                 Window1 Window1 = new Window1();
@@ -140,10 +144,10 @@ namespace Wpf_Pendu_Quentin_Vernaison
 
         }
 
-        private void Btn_Music_Click(object sender, RoutedEventArgs e) // Fonction qui permet de faire MusicOn/Off
+        private void Btn_Hardcore_Click(object sender, RoutedEventArgs e) // Permet de jouer en hardcore et de ne pas voir le nombres de lettres
         {
-            _penduClass.PlayMusic();
-            
+            _penduClass.Hardcore();
+
         }
     }
 }

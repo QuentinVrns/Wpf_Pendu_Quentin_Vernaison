@@ -148,7 +148,7 @@
                 <Button Grid.Row="1" Content="Rules" x:Name="BTN_Parametre" Style="{StaticResource Aide}" Margin="15"  Background="#E1BBC9" Click="BTN_Parametre_Click" />
                 <Button Grid.Row="2" Content="Aide" x:Name="BTN_Aide" Style="{StaticResource Aide}" Margin="15"  Background="#E1BBC9" Click="BTN_Aide_Click" />
                 <Label Name="LBL_Vie" Content="Vie : 7" Style="{StaticResource Vie}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <Button Grid.Row="3" x:Name="Btn_Music" Style="{StaticResource Aide}" Content="Music" Margin="15"  Background="#E1BBC9" Click="Btn_Music_Click" />
+                <Button Grid.Row="3" x:Name="Btn_Hardcore" Style="{StaticResource Aide}" Content="Hard" Margin="15"  Background="#E1BBC9" Click="Btn_Hardcore_Click" />
             </Grid>
 
             <!--************************** Bloc du Pendu ou l'image du pendu est afficher et un timer au dessus **************************-->

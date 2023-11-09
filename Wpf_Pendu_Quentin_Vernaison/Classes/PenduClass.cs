@@ -46,6 +46,15 @@ namespace Wpf_Pendu_Quentin_Vernaison.Classes
 
         }
 
+        public void StartNewGameHardcore() // Une fonction qui permet de commencer une nouvelle partie et qui choisi un mot aléatoire dans le tableau de mots et qui affiche le mot mystère en ?
+        {
+            Random random = new Random();
+            _mainWindow.motMystere = _mainWindow.mots[random.Next(_mainWindow.mots.Length)].ToUpper();
+            _mainWindow.motAffiche = new string('_', _mainWindow.motMystere.Length);
+            _mainWindow.TB_Mot.Text = _mainWindow.motAffiche;
+            _mainWindow.erreurs = 0;            
+        }   
+
 
         // ********************************************************** Aide **********************************************************
         // ********************************************************** Aide **********************************************************
@@ -119,6 +128,13 @@ namespace Wpf_Pendu_Quentin_Vernaison.Classes
         }
 
 
+
+        // ********************************************************** Restart **********************************************************
+        // ********************************************************** Restart **********************************************************
+        // ********************************************************** Restart **********************************************************
+        // ********************************************************** Restart **********************************************************
+        // ********************************************************** Restart **********************************************************
+
         public void Restart()
         {
             _mainWindow.PenduImages.Source = new BitmapImage(new Uri("Image/0.png", UriKind.Relative));
@@ -134,6 +150,22 @@ namespace Wpf_Pendu_Quentin_Vernaison.Classes
             _mainWindow.Premiergame = true;
         }
 
+        public void Hardcore() //fonction qui fait comme la restart mais qui ne permet pas de voir les ???
+        {
+            _mainWindow.PenduImages.Source = new BitmapImage(new Uri("Image/0.png", UriKind.Relative));
+            StopTimer();
+            StartNewGameHardcore();
+            _mainWindow.LBL_Vie.Content = "Vie: " + (_mainWindow.maxErreurs - _mainWindow.erreurs);
+            foreach (var bouton in _mainWindow.Grille.Children.OfType<Button>()) // Réactive les boutons et remet la couleur des boutons avec la couleur initial
+            {
+                bouton.IsEnabled = true;
+                bouton.Foreground = Brushes.Black;
+
+            }
+            _mainWindow.Premiergame = true;
+
+        }   
+
 
 
         // ********************************************************** Blocage **********************************************************
@@ -144,7 +176,7 @@ namespace Wpf_Pendu_Quentin_Vernaison.Classes
 
 
 
-        // Fais moi une fonction qui permet de bloquer les boutons quand le mot est trouvé ou quand le joueur a perdu
+        // Fonction qui permet de bloquer les boutons quand le mot est trouvé ou quand le joueur a perdu
 
         public void BloquerBouton()
         {
@@ -155,13 +187,8 @@ namespace Wpf_Pendu_Quentin_Vernaison.Classes
         }
 
 
-        // Fonction qui permet au bouton d'allumer ou eteindre la music
+        
 
-        public void PlayMusic()
-        {
-            _mainWindow._mediaPlayer.Open(new Uri(_mainWindow.path, UriKind.Relative));
-            _mainWindow._mediaPlayer.Play();
-        }   
         
             
         
