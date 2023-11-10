@@ -115,7 +115,7 @@
 
             <!--************************** Bloc du Haut (Titre) **************************-->
             <Grid Grid.Column="0" Grid.Row="0">
-                <TextBox Name="Title" Text="HANGMAN" Style="{StaticResource Title}" IsReadOnly="True" />
+                <TextBox Name="Title" Text="Jeu du Pendu" Style="{StaticResource Title}" IsReadOnly="True" />
 
             </Grid>
 

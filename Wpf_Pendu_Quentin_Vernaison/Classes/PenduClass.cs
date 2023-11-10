@@ -101,7 +101,7 @@ namespace Wpf_Pendu_Quentin_Vernaison.Classes
             {
 
 
-                Window4 Window4 = new Window4();
+                Window4 Window4 = new Window4(_mainWindow);
                 Window4.Show();
 
 

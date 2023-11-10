@@ -105,7 +105,7 @@ namespace Wpf_Pendu_Quentin_Vernaison
             {
                 _penduClass.BloquerBouton();
                 _penduClass.StopTimer();               
-                Window4 Window4 = new Window4();
+                Window4 Window4 = new Window4(this);
                 Window4.ShowDialog();
                 this.Close();
                 Premiergame = true;

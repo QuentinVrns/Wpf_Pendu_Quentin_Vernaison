@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Pendu_Quentin_Vernaison"
         mc:Ignorable="d"
-        Title="Window3" Height="200" Width="400">
+        Title="Window3" Height="200" Width="400"  >
 
     <Window.Resources>
         <Style x:Key="Vie" TargetType="{x:Type Label}">

@@ -14,15 +14,22 @@ using System.Windows.Shapes;
 
 namespace Wpf_Pendu_Quentin_Vernaison
 {
+    
     /// <summary>
     /// Logique d'interaction pour Window4.xaml
     /// </summary>
     public partial class Window4 : Window
     {
-        public Window4()
+        MainWindow _mainWindow;
+
+        public Window4(MainWindow main)
         {
             InitializeComponent();
+            
+            _mainWindow = main;
+            Perdu();
         }
+        
 
         private void Button_Click(object sender, RoutedEventArgs e)  // Bouton qui permet de retourner au menu principal et empecher de pouvoir clicker sur la croix pour fermer la fenêtre
         {
@@ -32,9 +39,15 @@ namespace Wpf_Pendu_Quentin_Vernaison
             
         }
 
-        private void Grid_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        // Fonction qui marque vous avez perdu dans le label et qui affiche le mot mystère
+        public void Perdu()
         {
 
+            Label1.Content = "Le mot mystère était : " + _mainWindow.motMystere;
+                                                 
         }
+
+        
+        
     }
 }

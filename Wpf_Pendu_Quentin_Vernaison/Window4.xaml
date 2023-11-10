@@ -11,7 +11,7 @@
             <Style x:Key="Vie" TargetType="{x:Type Label}">
                 <Setter Property="Margin" Value="2"/>
                 <Setter Property="Background" Value="#E1BBC9"/>
-                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontSize" Value="15"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Label}">
@@ -43,7 +43,9 @@
 
     </Window.Resources>
 
-    <Grid Background="#E1BBC9"  >
+    <Grid Background="#E1BBC9" >
+        
+        
         
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
@@ -51,7 +53,8 @@
         </Grid.RowDefinitions>
         
         <!-- Label qui me permet de montre au joueur qu'il a perdu -->
-        <Label Grid.Row="0" Content="Mince vous&#xD;&#xA;avez Perdu" Style="{StaticResource Vie}" Margin="50,10,50,10" />
+        <Label Grid.Row="0" Name="Label1" Style="{StaticResource Vie}" Margin="50,10,50,10" />
         <Button Grid.Row="1" Content="Exit" Style="{StaticResource Aide}" Margin="150,0,150,0" Click="Button_Click" />
+        
     </Grid>
 </Window>
